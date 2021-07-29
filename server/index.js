@@ -15,6 +15,6 @@ app.get( "/api/", getVehicle);
 app.post( "/api/", addVehicle);
 
 // start the Express server
-app.listen( PORT, () => {
+app.listen( process.env.PORT || 9000, () => {
     console.log( `server started at http://localhost:${ PORT }` );
 } );
