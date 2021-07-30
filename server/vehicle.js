@@ -1,9 +1,26 @@
+const db = require('./config');
+const Vehicle = require('./models/Vehicles')
 const getVehicle = (req, res) => { 
-    res.json(vehicleRepo);
-    // return {"test": "Test"};
+    
+    Vehicle.findAll({attributes: ['id', 'type', 'milage', 'hybrid']}).then((vehicles) => {
+        let data = []
+        for (let i = 0; i < vehicles.length; i++) {
+            data.push(vehicles[i].dataValues)
+        }
+        return res.json(data).status(200)
+        
+    }).catch((err)=> {
+        console.log(err)
+    })
+    
 }
 const addVehicle = (req, res) => {
-    return vehicleRepo.push(req.body);
+    Vehicle.create(req.body).then(()=> {
+        console.log('Inserted')
+    }).catch((err)=> {
+        console.log(err)
+    })
+    // return vehicleRepo.push(req.body);
     
     // vehicleRepo.push(newVehicle);
 
@@ -13,6 +30,7 @@ module.exports = { getVehicle, addVehicle }
 
 let vehicleRepo = [
     {
+        "id": 0,
         "type": "Car",
         "milage": 3000,
         "hybrid": false

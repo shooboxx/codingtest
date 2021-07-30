@@ -1,5 +1,7 @@
 const express = require( 'express' );
+require('dotenv').config()
 const path = require('path');
+const db = require ('./config');
 
 const app = express();
 
@@ -18,3 +20,6 @@ app.post( "/api/", addVehicle);
 app.listen( process.env.PORT || 9000, () => {
     console.log( `server started at http://localhost:${ PORT }` );
 } );
+
+
+db.authenticate().then(()=> {console.log('database connected')}).catch((err )=> {console.log('database failed', err);})
